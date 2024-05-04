@@ -1,0 +1,11 @@
+@font-face {
+  font-family: "Inter";
+  src: url(./fonts/inter.css);
+}
+
+@font-face {
+  font-family: "InterDisplay";
+  src: url(./fonts/inter.css);
+  font-weight: 900;
+  font-display: swap;
+}

@@ -5,15 +5,19 @@
 
 .page__section {
   max-width: 880px;
-  width: 100%;
+  width: 90%;
   position: relative;
   margin: 0 auto;
 }
 
 .page__content {
-  /* margin-left: 200px;
-  margin-right: 200px; */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+@media screen and (max-width: 320px) {
+  .page__section {
+    width: 100%;
+  }
 }
