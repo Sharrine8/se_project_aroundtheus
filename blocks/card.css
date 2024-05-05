@@ -11,6 +11,7 @@
   border-radius: 20%;
   background-color: white;
   border-radius: 10px;
+  overflow: hidden;
   color: black;
 }
 

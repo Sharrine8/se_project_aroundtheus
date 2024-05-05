@@ -19,7 +19,7 @@
 
 .profile__title {
   font-size: 42px;
-  line-height: 48px;
+  line-height: 1.2;
   font-weight: 500;
   grid-area: title;
   margin: 0;
@@ -46,7 +46,7 @@
 
 .profile__description {
   font-size: 18px;
-  line-height: 21.78px;
+  line-height: 1.2;
   font-weight: 400;
   grid-area: description;
   margin: 0;
@@ -84,10 +84,28 @@
   .profile__edit-button {
     width: 18px;
     height: 18px;
+    margin: 0;
   }
   .profile__add-button {
     width: 90vw;
     align-self: center;
     margin: 36px 0 0;
+  }
+}
+
+@media screen and (max-width: 799px) and (min-width: 321px) {
+  .profile {
+    flex-direction: column;
+    text-align: center;
+  }
+  .profile__title {
+    font-size: 30px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .profile__add-button {
+    width: 90vw;
+    align-self: center;
+    padding: 10px;
   }
 }

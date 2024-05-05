@@ -1,5 +1,5 @@
 .header {
-  height: 74px;
+  max-height: 74px;
   max-width: 100%;
   margin: 45px 0 0;
   border-bottom: 1px solid #545454;
