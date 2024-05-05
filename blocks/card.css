@@ -1,7 +1,8 @@
 .cards {
   font-family: Inter, Arial, sans-serif;
   display: grid;
-  margin: 40px 0 0;
+  margin: 0;
+  padding: 0;
 }
 
 .card {
