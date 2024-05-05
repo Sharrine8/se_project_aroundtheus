@@ -1,5 +1,5 @@
 .cards {
-  font-family: "Inter", Arial, sans-serif;
+  font-family: Inter, Arial, sans-serif;
   display: grid;
   margin: 40px 0 0;
 }
@@ -37,18 +37,21 @@
   align-items: center;
 }
 
-.card__text {
+.card__title {
   font-weight: 900;
   font-size: 24px;
-  font-family: "Inter", Arial, sans-serif;
+  font-family: Inter, Arial, sans-serif;
   margin: 0;
   line-height: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .card__like-button {
   background: transparent url(../images/like-icon.svg) center no-repeat;
   border: none;
-  width: 21px;
+  min-width: 21px;
   height: 18px;
   padding: 0;
 }
