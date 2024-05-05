@@ -1,7 +1,7 @@
 .cards {
   font-family: Inter, Arial, sans-serif;
   display: grid;
-  margin: 0;
+  margin: 35px 0 0;
   padding: 0;
 }
 
@@ -60,5 +60,5 @@
 
 .card__like-button:hover {
   opacity: 60%;
-  cursor: url("../images/cursor.svg"), auto;
+  cursor: pointer;
 }
