@@ -8,7 +8,9 @@
 
 **Project Description**
 
-This project is a social media profile page. It includes a profile with an avatar and info, like buttons, posts, and more. https://sharrine8.github.io/se_project_aroundtheus/
+This project is a social media profile page. It includes a profile with an avatar and info, like buttons, posts, and more.
+Site: https://sharrine8.github.io/se_project_aroundtheus/
+Description Video: https://drive.google.com/file/d/1D3jupCZFtGxE3EozhQ2xrmw-OE2J45tP/view?usp=sharing
 
 **Technologies Used**
 
@@ -18,3 +20,4 @@ This project is a social media profile page. It includes a profile with an avata
 **Plans for Improving**
 
 - Adding JavaScript for more functionality
+- Possibly padding or further positioning for 800+px viewport
