@@ -1,5 +1,5 @@
 .cards {
-  font-family: Inter, Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   display: grid;
   margin: 35px 0 0;
   padding: 0;
@@ -42,7 +42,7 @@
 .card__title {
   font-weight: 900;
   font-size: 24px;
-  font-family: Inter, Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   margin: 0;
   line-height: 100%;
   text-overflow: ellipsis;

@@ -23,7 +23,7 @@
   font-weight: 500;
   grid-area: title;
   margin: 0;
-  font-family: Inter, Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   white-space: nowrap;
 }
 
@@ -49,7 +49,7 @@
   font-weight: 400;
   grid-area: description;
   margin: 0;
-  font-family: Inter, Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
 }
 
 .profile__add-button {
