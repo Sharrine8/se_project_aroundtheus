@@ -1,35 +1,18 @@
-.cards {
-  font-family: "Inter", Arial, sans-serif;
-  display: grid;
-  margin: 35px 0 0;
-  padding: 0;
-}
-
 .card {
   list-style-type: none;
   padding: 0;
   max-width: 282px;
-  border-radius: 20%;
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
   color: black;
 }
 
-.card__list {
-  display: grid;
-  grid-gap: 20px 17px;
-  justify-content: center;
-  grid-template-columns: repeat(auto-fit, 282px);
-  padding: 0;
-}
-
 .card__image {
   height: 282px;
   width: 282px;
   margin: 0;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  object-fit: cover;
 }
 
 .card__description {
@@ -59,6 +42,6 @@
 }
 
 .card__like-button:hover {
-  opacity: 60%;
+  opacity: 0.5;
   cursor: pointer;
 }
