@@ -107,7 +107,7 @@
   .profile__info {
     position: relative;
     grid-template-columns: auto auto;
-    max-width: 240px;
+    max-width: 236px;
   }
   .profile__title {
     font-size: 22px;

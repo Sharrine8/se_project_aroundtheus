@@ -2,7 +2,7 @@
   min-height: 74px;
   max-width: 100%;
   margin: 45px 0 42px;
-  padding-bottom: 41px;
+  padding: 0 0;
   border-bottom: 1px solid rgb(84 84 84 / 0.7);
 }
 
@@ -15,9 +15,10 @@
   .header {
     margin: 28px 0 42px;
     padding: 0;
+    min-height: 56px;
   }
   .header__logo {
-    padding: 0 0 32px 27px;
+    padding: 0 0 0 27px;
     width: 126px;
     height: 24px;
   }
