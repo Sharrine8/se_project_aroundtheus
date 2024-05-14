@@ -16,9 +16,10 @@
 @media screen and (max-width: 320px) {
   .footer {
     padding: 0;
-    margin: 36px 19px;
+    margin: 48px 19px 36px;
     max-width: 282px;
   }
   .footer__text {
     font-size: 14px;
   }
+}
