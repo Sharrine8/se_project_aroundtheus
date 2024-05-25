@@ -1,4 +1,4 @@
-let initialCards = [
+const initialCards = [
   {
     name: "Yosemite Valley",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
@@ -25,4 +25,14 @@ let initialCards = [
   },
 ];
 
-console.log(initialCards);
+const profileEditButton = document.querySelector("#profile-edit-button");
+const profileEditModal = document.querySelector("#profile-edit-modal");
+const profileModalClose = document.querySelector("#profile-modal-close");
+
+profileEditButton.addEventListener("click", function () {
+  profileEditModal.classList.add("modal__open");
+});
+
+profileModalClose.addEventListener("click", function () {
+  profileEditModal.classList.remove("modal__open");
+});

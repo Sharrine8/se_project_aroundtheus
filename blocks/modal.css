@@ -7,7 +7,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
   color: black;
-  display: flex;
+  display: none;
 }
 
 .modal__open {
@@ -61,16 +61,16 @@
   line-height: 1.2;
 }
 
-.modal__title {
+.modal__title,
+.modal__description {
   border: none;
   border-bottom: 1px solid #000;
   padding-bottom: 13px;
 }
 
-.modal__description {
-  border: none;
-  border-bottom: 1px solid #000;
-  padding-bottom: 13px;
+.modal__title:focus,
+.modal__description:focus {
+  outline: none;
 }
 
 .modal__button {
