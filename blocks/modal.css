@@ -64,7 +64,7 @@
 
 .modal__input {
   border: none;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   padding-bottom: 10px;
   margin: 0;
 }
@@ -95,7 +95,7 @@
     height: calc(322px - 50px);
     padding: 25px 22px;
   }
-  .modal__close {
+  .modal__close-button {
     height: 26px;
     width: 26px;
     left: calc(100% - 26px);
