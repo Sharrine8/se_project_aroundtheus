@@ -82,7 +82,7 @@
   }
 }
 
-@media screen and (max-width: 799px) and (min-width: 321px) {
+@media screen and (max-width: 799px) and (min-width: 500px) {
   .profile {
     flex-direction: column;
     text-align: center;
@@ -106,7 +106,7 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 499px) {
   .profile {
     flex-direction: column;
     text-align: center;
