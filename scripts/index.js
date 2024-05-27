@@ -1,4 +1,4 @@
-function closeModal() {
+function toggleModal() {
   profileEditModal.classList.toggle("modal_open");
   return;
 }
@@ -7,7 +7,7 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileTitle.innerText = profileTitleInput.value;
   profileDesc.innerText = profileDescInput.value;
-  closeModal();
+  toggleModal();
   return;
 }
 
@@ -63,11 +63,11 @@ const cardListEl = document.querySelector(".cards__list");
 profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.innerText;
   profileDescInput.value = profileDesc.innerText;
-  closeModal();
+  toggleModal();
 });
 
 profileModalClose.addEventListener("click", () => {
-  closeModal();
+  toggleModal();
 });
 
 profileFormElement.addEventListener("submit", handleProfileFormSubmit);
