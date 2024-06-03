@@ -1,21 +1,17 @@
-function toggleEditModal() {
-  profileEditModal.classList.toggle("modal_open");
-  return;
+//Functions
+function openPopup(popup) {
+  popup.classList.add("modal_open");
 }
 
-function toggleAddModal() {
-  cardAddModal.classList.toggle("modal_open");
-}
-
-function toggleImageModal() {
-  cardImageModal.classList.toggle("modal_open");
+function closePopup(popup) {
+  popup.classList.remove("modal_open");
 }
 
 function handleEditProfileFormSubmit(evt) {
   evt.preventDefault();
   profileTitle.innerText = profileTitleInput.value;
   profileDesc.innerText = profileDescInput.value;
-  toggleEditModal();
+  closePopup(profileEditModal);
   return;
 }
 
@@ -28,9 +24,8 @@ function handleAddProfileFormSubmit(evt) {
     link,
   });
   cardListEl.prepend(cardElement);
-  cardAddTitleInput.value = "";
-  cardImageInput.value = "";
-  toggleAddModal();
+  evt.target.reset();
+  closePopup(cardAddModal);
   return;
 }
 
@@ -50,14 +45,15 @@ function getCardElement(data) {
     cardElement.remove();
   });
   cardImageEl.addEventListener("click", () => {
-    console.log(data.link + " " + data.name);
     cardImageModalCaption.textContent = data.name;
     cardImageModalLink.setAttribute("src", data.link);
-    toggleImageModal();
+    cardImageModalLink.setAttribute("alt", "Picture of " + data.name);
+    openPopup(cardImageModal);
   });
   return cardElement;
 }
 
+//Cards Array
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -102,14 +98,14 @@ const profileDescInput = document.querySelector("#modal-description-input");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 const cardListEl = document.querySelector(".cards__list");
-//Add Add Modal
+//Add Modal
 const cardAddButton = document.querySelector("#profile-add-button");
 const cardAddModal = document.querySelector("#profile-add-modal");
 const cardAddModalClose = document.querySelector("#profile-add-modal-close");
 const cardAddFormElement = document.forms["modal-add-form"];
 const cardAddTitleInput = document.querySelector("#modal-add-title-input");
 const cardImageInput = document.querySelector("#modal-image-input");
-
+//Image Modal
 const cardLikeButton = document.querySelector(".card__like-button");
 const cardImageModal = document.querySelector("#modal-image-popup");
 const cardImageModalClose = document.querySelector("#modal-image-close");
@@ -119,11 +115,11 @@ const cardImageModalLink = document.querySelector(".modal__image");
 profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.innerText;
   profileDescInput.value = profileDesc.innerText;
-  toggleEditModal();
+  openPopup(profileEditModal);
 });
 
 profileEditModalClose.addEventListener("click", () => {
-  toggleEditModal();
+  closePopup(profileEditModal);
 });
 
 profileEditFormElement.addEventListener("submit", handleEditProfileFormSubmit);
@@ -134,15 +130,16 @@ initialCards.forEach((data) => {
 });
 
 cardAddButton.addEventListener("click", () => {
-  toggleAddModal();
+  openPopup(cardAddModal);
+  console.log(cardAddModal);
 });
 
 cardAddModalClose.addEventListener("click", () => {
-  toggleAddModal();
+  closePopup(cardAddModal);
 });
 
 cardImageModalClose.addEventListener("click", () => {
-  toggleImageModal();
+  closePopup(cardImageModal);
 });
 
 cardAddFormElement.addEventListener("submit", handleAddProfileFormSubmit);
