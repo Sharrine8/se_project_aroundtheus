@@ -106,9 +106,22 @@
       </div>
     </div>
 
+    <div class="modal" id="modal-image-popup">
+      <div class="modal__image-container">
+        <button
+          class="modal__close-button"
+          id="modal-image-close"
+        ></button>
+        <img src="" alt="" class="modal__image" />
+        <p class="modal__caption"></p>
+        </form>
+      </div>
+    </div>
+
     <template id="card-template">
       <li class="card">
         <img src="" alt="" class="card__image" />
+        <button class="card__delete-button" type="button"></button>
         <div class="card__description">
           <h2 class="card__title"></h2>
           <button class="card__like-button" type="button"></button>

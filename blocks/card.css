@@ -6,6 +6,7 @@
   border-radius: 10px;
   overflow: hidden;
   color: black;
+  position: relative;
 }
 
 .card__image {
@@ -49,4 +50,19 @@
 .card__like-button_active {
   background: transparent url(../images/like-icon-active.svg) center no-repeat;
   opacity: 1;
+}
+
+.card__delete-button {
+  background: transparent url(../images/delete-icon.svg) center no-repeat;
+  width: 18px;
+  height: 19.3px;
+  border: none;
+  position: absolute;
+  z-index: 999;
+  top: 18px;
+  right: 15px;
+}
+
+.card__delete-button:hover {
+  opacity: 0.6;
 }

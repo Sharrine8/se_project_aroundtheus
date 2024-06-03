@@ -7,6 +7,10 @@ function toggleAddModal() {
   cardAddModal.classList.toggle("modal_open");
 }
 
+function toggleImageModal() {
+  cardImageModal.classList.toggle("modal_open");
+}
+
 function handleEditProfileFormSubmit(evt) {
   evt.preventDefault();
   profileTitle.innerText = profileTitleInput.value;
@@ -35,11 +39,21 @@ function getCardElement(data) {
   const cardTitleEl = cardElement.querySelector(".card__title");
   const cardImageEl = cardElement.querySelector(".card__image");
   const cardLikeButton = cardElement.querySelector(".card__like-button");
+  const cardDeleteButton = cardElement.querySelector(".card__delete-button");
   cardImageEl.setAttribute("src", data.link);
   cardImageEl.setAttribute("alt", "Picture of " + data.name);
   cardTitleEl.textContent = data.name;
   cardLikeButton.addEventListener("click", () => {
     cardLikeButton.classList.toggle("card__like-button_active");
+  });
+  cardDeleteButton.addEventListener("click", () => {
+    cardElement.remove();
+  });
+  cardImageEl.addEventListener("click", () => {
+    console.log(data.link + " " + data.name);
+    cardImageModalCaption.textContent = data.name;
+    cardImageModalLink.setAttribute("src", data.link);
+    toggleImageModal();
   });
   return cardElement;
 }
@@ -97,6 +111,10 @@ const cardAddTitleInput = document.querySelector("#modal-add-title-input");
 const cardImageInput = document.querySelector("#modal-image-input");
 
 const cardLikeButton = document.querySelector(".card__like-button");
+const cardImageModal = document.querySelector("#modal-image-popup");
+const cardImageModalClose = document.querySelector("#modal-image-close");
+const cardImageModalCaption = document.querySelector(".modal__caption");
+const cardImageModalLink = document.querySelector(".modal__image");
 
 profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.innerText;
@@ -121,6 +139,10 @@ cardAddButton.addEventListener("click", () => {
 
 cardAddModalClose.addEventListener("click", () => {
   toggleAddModal();
+});
+
+cardImageModalClose.addEventListener("click", () => {
+  toggleImageModal();
 });
 
 cardAddFormElement.addEventListener("submit", handleAddProfileFormSubmit);

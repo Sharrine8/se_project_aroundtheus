@@ -87,6 +87,22 @@
   opacity: 0.8;
 }
 
+.modal__image-container {
+  background: transparent;
+  position: relative;
+  color: #fff;
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  padding: 0;
+  margin: auto;
+}
+
+.modal__image {
+  max-width: 75vw;
+  max-height: 75vh;
+}
+
 @media screen and (max-width: 630px) {
   .modal__container {
     width: calc(282px - 44px);
