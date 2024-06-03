@@ -45,3 +45,8 @@
   opacity: 0.5;
   cursor: pointer;
 }
+
+.card__like-button_active {
+  background: transparent url(../images/like-icon-active.svg) center no-repeat;
+  opacity: 1;
+}
