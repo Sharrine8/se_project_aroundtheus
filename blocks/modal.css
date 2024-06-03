@@ -7,11 +7,15 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
   color: black;
-  display: none;
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s, opacity 0.6s linear;
 }
 
 .modal_open {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
 }
 
 .modal__container {
@@ -23,6 +27,7 @@
   min-height: 260px;
   width: 358px;
   color: #000;
+  transition: visibility 1s, opacity 1s linear;
 }
 
 .modal__close-button {
@@ -96,6 +101,7 @@
   font-size: 12px;
   padding: 0;
   margin: auto;
+  transition: visibility 1s, opacity 1s linear;
 }
 
 .modal__image {
