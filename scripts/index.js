@@ -1,10 +1,19 @@
 //Functions
 function openPopup(popup) {
   popup.classList.add("modal_open");
+  document.addEventListener("keydown", escClose);
 }
 
 function closePopup(popup) {
   popup.classList.remove("modal_open");
+  document.removeEventListener("keydown", escClose);
+}
+
+function escClose(evt) {
+  if (evt.key === "Escape") {
+    const openModal = document.querySelector(".modal_open");
+    closePopup(openModal);
+  }
 }
 
 function handleEditProfileFormSubmit(evt) {
@@ -135,7 +144,6 @@ initialCards.forEach((data) => {
 
 cardAddButton.addEventListener("click", () => {
   openPopup(cardAddModal);
-  console.log(cardAddModal);
 });
 
 cardAddFormElement.addEventListener("submit", handleAddProfileFormSubmit);
