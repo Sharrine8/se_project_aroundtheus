@@ -17,7 +17,6 @@ function escClose(evt) {
 }
 
 function overlayClose(evt) {
-  console.log("Overlay clicked");
   const openModal = document.querySelector(".modal_open");
   if (openModal) {
     closePopup(openModal);
@@ -158,7 +157,7 @@ cardAddButton.addEventListener("click", () => {
 cardAddFormElement.addEventListener("submit", handleAddProfileFormSubmit);
 
 modalList.forEach((modal) => {
-  modal.addEventListener("click", (e) => {
+  modal.addEventListener("mousedown", (e) => {
     if (e.target.classList.contains("modal")) {
       closePopup(modal);
     }
