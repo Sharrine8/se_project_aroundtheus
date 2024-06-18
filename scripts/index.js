@@ -16,6 +16,14 @@ function escClose(evt) {
   }
 }
 
+function overlayClose(evt) {
+  console.log("Overlay clicked");
+  const openModal = document.querySelector(".modal_open");
+  if (openModal) {
+    closePopup(openModal);
+  }
+}
+
 function handleEditProfileFormSubmit(evt) {
   evt.preventDefault();
   profileTitle.innerText = profileTitleInput.value;
@@ -104,6 +112,7 @@ const profileDesc = document.querySelector("#profile-description");
 const profileTitleInput = document.querySelector("#modal-title-input");
 const profileDescInput = document.querySelector("#modal-description-input");
 const closeButtons = document.querySelectorAll(".modal__close-button");
+const modalList = document.querySelectorAll(".modal");
 //Cards
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
@@ -147,3 +156,11 @@ cardAddButton.addEventListener("click", () => {
 });
 
 cardAddFormElement.addEventListener("submit", handleAddProfileFormSubmit);
+
+modalList.forEach((modal) => {
+  modal.addEventListener("click", (e) => {
+    if (e.target.classList.contains("modal")) {
+      closePopup(modal);
+    }
+  });
+});

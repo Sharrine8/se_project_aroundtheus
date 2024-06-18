@@ -5,7 +5,7 @@
   right: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 900;
+  z-index: 999;
   color: black;
   display: flex;
   opacity: 0;
@@ -28,7 +28,6 @@
   width: 358px;
   color: #000;
   transition: visibility 0.5s, opacity 0.5s linear;
-  z-index: 999;
 }
 
 .modal__close-button {
