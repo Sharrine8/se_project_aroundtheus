@@ -1,11 +1,13 @@
-enableValidation({
+const options = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__button",
   inactiveButtonClass: "modal__button_disabled",
   inputErrorClass: "modal__input_type_error",
   errorClass: "modal__error_visible",
-});
+};
+
+enableValidation(options);
 
 function enableValidation(options) {
   const formList = Array.from(document.querySelectorAll(options.formSelector));
@@ -29,7 +31,7 @@ function checkInputValidity(form, input, options) {
   if (input.validity.valid) {
     removeInputError(form, input, options);
   } else {
-    addInputError(form, input, input.validationMessage, options);
+    addInputError(form, input, options);
   }
 }
 
@@ -38,17 +40,14 @@ function removeInputError(form, input, options) {
   input.classList.remove(options.inputErrorClass);
   errorElement.classList.remove(options.errorClass);
   errorElement.textContent = "";
-  const buttonElement = form.querySelector(options.submitButtonSelector);
-  buttonElement.disabled = false;
 }
 
-function addInputError(form, input, errorMessage, options) {
+function addInputError(form, input, options) {
   const errorElement = form.querySelector(`.${input.id}-error`);
+  const errorMessage = input.validationMessage;
   input.classList.add(options.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(options.errorClass);
-  const buttonElement = form.querySelector(options.submitButtonSelector);
-  buttonElement.disabled = true;
 }
 
 function toggleButtonState(inputList, buttonElement, options) {
@@ -65,4 +64,13 @@ function hasInvalidInput(inputList) {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });
+}
+
+function resetValidation(form, options) {
+  const inputList = [...form.querySelectorAll(options.inputSelector)];
+  const buttonElement = form.querySelector(options.submitButtonSelector);
+  inputList.forEach((input) => {
+    removeInputError(form, input, options);
+  });
+  toggleButtonState(inputList, buttonElement, options);
 }

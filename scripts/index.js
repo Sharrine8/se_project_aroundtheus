@@ -35,6 +35,8 @@ function handleAddProfileFormSubmit(evt) {
   cardListEl.prepend(cardElement);
   evt.target.reset();
   closePopup(cardAddModal);
+  cardAddModalSubmitButton.disabled = true;
+  cardAddModalSubmitButton.classList.add("modal__button_disabled");
   return;
 }
 
@@ -116,6 +118,7 @@ const cardAddModalClose = document.querySelector("#profile-add-modal-close");
 const cardAddFormElement = document.forms["modal-add-form"];
 const cardAddTitleInput = document.querySelector("#modal-add-title-input");
 const cardImageInput = document.querySelector("#modal-image-input");
+const cardAddModalSubmitButton = cardAddModal.querySelector(".modal__button");
 //Image Modal
 const cardLikeButton = document.querySelector(".card__like-button");
 const cardImageModal = document.querySelector("#modal-image-popup");
@@ -133,6 +136,7 @@ closeButtons.forEach((button) => {
 profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.innerText;
   profileDescInput.value = profileDesc.innerText;
+  resetValidation(profileEditFormElement, options);
   openPopup(profileEditModal);
 });
 
