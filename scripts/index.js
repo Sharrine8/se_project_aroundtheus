@@ -1,24 +1,17 @@
 //Functions
 function openPopup(popup) {
   popup.classList.add("modal_open");
-  document.addEventListener("keydown", escClose);
+  document.addEventListener("keydown", handleEscape);
 }
 
 function closePopup(popup) {
   popup.classList.remove("modal_open");
-  document.removeEventListener("keydown", escClose);
+  document.removeEventListener("keydown", handleEscape);
 }
 
-function escClose(evt) {
+function handleEscape(evt) {
   if (evt.key === "Escape") {
     const openModal = document.querySelector(".modal_open");
-    closePopup(openModal);
-  }
-}
-
-function overlayClose(evt) {
-  const openModal = document.querySelector(".modal_open");
-  if (openModal) {
     closePopup(openModal);
   }
 }
