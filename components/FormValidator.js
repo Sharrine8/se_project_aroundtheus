@@ -67,19 +67,3 @@ export default class FormValidator {
     this._toggleButtonState();
   }
 }
-
-//constructor has two parameters: settings object that stores
-//selectors and form classes; form element to be validated
-
-//private methods for processing form:
-//1. checking fields validity (checkInputValidity)
-//2. changing state of submit (toggleButtonState)
-//3. adding all needed handlers (setEventListeners?)
-
-//public method (enableValidation)
-
-//public method to either disable the state of the button
-//reset form validation (resetValidation)
-
-//create an instance of the FormValidator class for each form
-//that should be validated
