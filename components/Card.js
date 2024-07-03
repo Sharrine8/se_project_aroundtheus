@@ -7,14 +7,11 @@ export default class Card {
   }
 
   _setEventListeners() {
-    //set all necessary event listeners
-    //".card__like-button"
     this._cardElement
       .querySelector(".card__like-button")
       .addEventListener("click", () => {
         this._handleLikeIcon();
       });
-    //".card__delete-button"
     this._cardElement
       .querySelector(".card__delete-button")
       .addEventListener("click", () => {
@@ -39,7 +36,6 @@ export default class Card {
   }
 
   getView() {
-    //get the card view
     this._cardElement = document
       .querySelector(this._cardSelector)
       .content.querySelector(".card")
@@ -48,9 +44,7 @@ export default class Card {
     this._imageElement = this._cardElement.querySelector(".card__image");
     this._imageElement.setAttribute("src", this._link);
     this._imageElement.setAttribute("alt", "Picture of " + this._name);
-    //set event listeners
     this._setEventListeners();
-    //return the card
     return this._cardElement;
   }
 }

@@ -1,4 +1,15 @@
 import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+
+//FormValidator object
+const settings = {
+  formSelector: ".modal__form",
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
 
 //Functions
 function openPopup(popup) {
@@ -30,10 +41,14 @@ function handleAddProfileFormSubmit(evt) {
   evt.preventDefault();
   const name = cardAddTitleInput.value;
   const link = cardImageInput.value;
-  const cardElement = getCardElement({
-    name,
-    link,
-  });
+  const cardElement = new Card(
+    {
+      name,
+      link,
+    },
+    "#card-template",
+    handleCardImageClick
+  ).getView();
   cardListEl.prepend(cardElement);
   evt.target.reset();
   closePopup(cardAddModal);
@@ -47,30 +62,6 @@ function handleCardImageClick(name, link) {
   cardImageModalLink.setAttribute("src", link);
   cardImageModalLink.setAttribute("alt", "Picture of " + name);
   openPopup(cardImageModal);
-}
-
-function getCardElement(data) {
-  //const cardElement = cardTemplate.cloneNode(true);
-  //const cardTitleEl = cardElement.querySelector(".card__title");
-  //const cardImageEl = cardElement.querySelector(".card__image");
-  //const cardLikeButton = cardElement.querySelector(".card__like-button");
-  //const cardDeleteButton = cardElement.querySelector(".card__delete-button");
-  //cardImageEl.setAttribute("src", data.link);
-  //cardImageEl.setAttribute("alt", "Picture of " + data.name);
-  //cardTitleEl.textContent = data.name;
-  // cardLikeButton.addEventListener("click", () => {
-  //   cardLikeButton.classList.toggle("card__like-button_active");
-  // });
-  // cardDeleteButton.addEventListener("click", () => {
-  //   cardElement.remove();
-  // });
-  // cardImageEl.addEventListener("click", () => {
-  //   cardImageModalCaption.textContent = data.name;
-  //   cardImageModalLink.setAttribute("src", data.link);
-  //   cardImageModalLink.setAttribute("alt", "Picture of " + data.name);
-  //   openPopup(cardImageModal);
-  // });
-  //return cardElement;
 }
 
 //Cards Array
@@ -104,9 +95,6 @@ const initialCards = [
 //Profile Edit Modal
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
-// const profileEditModalClose = document.querySelector(
-//   "#profile-edit-modal-close"
-// );
 const profileEditFormElement = document.forms["modal-edit-form"];
 //Profile
 const profileTitle = document.querySelector("#profile-title");
@@ -117,23 +105,21 @@ const profileDescInput = document.querySelector("#modal-description-input");
 const closeButtons = document.querySelectorAll(".modal__close-button");
 const modalList = document.querySelectorAll(".modal");
 //Cards
-const cardTemplate =
-  document.querySelector("#card-template").content.firstElementChild;
 const cardListEl = document.querySelector(".cards__list");
 //Add Modal
 const cardAddButton = document.querySelector("#profile-add-button");
 const cardAddModal = document.querySelector("#profile-add-modal");
-//const cardAddModalClose = document.querySelector("#profile-add-modal-close");
 const cardAddFormElement = document.forms["modal-add-form"];
 const cardAddTitleInput = document.querySelector("#modal-add-title-input");
 const cardImageInput = document.querySelector("#modal-image-input");
 const cardAddModalSubmitButton = cardAddModal.querySelector(".modal__button");
 //Image Modal
-//const cardLikeButton = document.querySelector(".card__like-button");
 const cardImageModal = document.querySelector("#modal-image-popup");
-//const cardImageModalClose = document.querySelector("#modal-image-close");
 const cardImageModalCaption = document.querySelector(".modal__caption");
 const cardImageModalLink = document.querySelector(".modal__image");
+//FormValidator Instances
+const addFormValidator = new FormValidator(settings, "#modal-add-form");
+const editFormValidator = new FormValidator(settings, "#modal-edit-form");
 
 closeButtons.forEach((button) => {
   const popup = button.closest(".modal");
@@ -145,7 +131,7 @@ closeButtons.forEach((button) => {
 profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.innerText;
   profileDescInput.value = profileDesc.innerText;
-  resetValidation(profileEditFormElement, options);
+  editFormValidator.resetValidation();
   openPopup(profileEditModal);
 });
 
@@ -170,3 +156,6 @@ modalList.forEach((modal) => {
     }
   });
 });
+
+addFormValidator.enableValidation();
+editFormValidator.enableValidation();
