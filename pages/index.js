@@ -45,7 +45,7 @@ function handleAddProfileFormSubmit(evt) {
   cardListEl.prepend(cardElement);
   evt.target.reset();
   closePopup(cardAddModal);
-  addFormValidator._toggleButtonState();
+  addFormValidator.toggleButtonState();
   return;
 }
 
