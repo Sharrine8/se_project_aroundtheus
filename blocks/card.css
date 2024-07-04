@@ -16,6 +16,10 @@
   object-fit: cover;
 }
 
+.card__image:hover {
+  cursor: pointer;
+}
+
 .card__description {
   display: flex;
   padding: 25px 20px;
