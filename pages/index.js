@@ -42,7 +42,6 @@ function handleAddProfileFormSubmit() {
   const link = cardImageInput.value;
   const cardElement = createCard({ name, link });
   cardListEl.prepend(cardElement);
-  evt.target.reset();
   addCardPopupForm.close();
   addFormValidator.toggleButtonState();
   return;
@@ -139,7 +138,7 @@ profileEditButton.addEventListener("click", () => {
   profilePopupForm.open();
 });
 
-profileEditFormElement.addEventListener("submit", handleEditProfileFormSubmit);
+// profileEditFormElement.addEventListener("submit", handleEditProfileFormSubmit);
 
 initialCards.forEach((data) => {
   const cardElement = createCard(data);
@@ -150,7 +149,7 @@ cardAddButton.addEventListener("click", () => {
   addCardPopupForm.open();
 });
 
-cardAddFormElement.addEventListener("submit", handleAddProfileFormSubmit);
+// cardAddFormElement.addEventListener("submit", handleAddProfileFormSubmit);
 
 // modalList.forEach((modal) => {
 //   // modal.addEventListener("mousedown", (e) => {
