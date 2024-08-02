@@ -30,22 +30,20 @@ const settings = {
 //   }
 // }
 
-function handleEditProfileFormSubmit(evt) {
-  evt.preventDefault();
+function handleEditProfileFormSubmit() {
   profileTitle.innerText = profileTitleInput.value;
   profileDesc.innerText = profileDescInput.value;
-  closePopup(profileEditModal);
+  profilePopupForm.close();
   return;
 }
 
-function handleAddProfileFormSubmit(evt) {
-  evt.preventDefault();
+function handleAddProfileFormSubmit() {
   const name = cardAddTitleInput.value;
   const link = cardImageInput.value;
   const cardElement = createCard({ name, link });
   cardListEl.prepend(cardElement);
   evt.target.reset();
-  closePopup(cardAddModal);
+  addCardPopupForm.close();
   addFormValidator.toggleButtonState();
   return;
 }
@@ -126,7 +124,6 @@ const addCardPopupForm = new PopupWithForm(
   "#profile-add-modal",
   handleAddProfileFormSubmit
 );
-console.log(addCardPopupForm._handleFormSubmit);
 
 // closeButtons.forEach((button) => {
 //   const popup = button.closest(".modal");
@@ -165,3 +162,5 @@ cardAddFormElement.addEventListener("submit", handleAddProfileFormSubmit);
 
 addFormValidator.enableValidation();
 editFormValidator.enableValidation();
+addCardPopupForm.setEventListeners();
+profilePopupForm.setEventListeners();
