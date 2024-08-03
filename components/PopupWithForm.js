@@ -14,9 +14,6 @@ export default class PopupWithForm extends Popup {
   }
 
   _getInputValue() {
-    //collects data from all input fields and returns it as an
-    //object. This data should then be passed to the submission
-    //handler as an argument
     this._inputData = {};
     this._inputValues.forEach((input) => {
       this._inputData[input.name] = input.value;
@@ -25,9 +22,6 @@ export default class PopupWithForm extends Popup {
   }
 
   setEventListeners() {
-    //overrides parent method; should add a submit event listener
-    //to the form and call the setEventListeners() method
-    //of the parent class
     super.setEventListeners();
     this._popupForm.addEventListener("submit", (evt) => {
       evt.preventDefault();
@@ -35,6 +29,3 @@ export default class PopupWithForm extends Popup {
     });
   }
 }
-
-//create an instance of the PopupWithForm for each popup
-//that contains a form and call their setEventListeners()
