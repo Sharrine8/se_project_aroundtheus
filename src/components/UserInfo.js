@@ -6,8 +6,8 @@ export default class UserInfo {
 
   getUserInfo() {
     return {
-      name: this._profileName.textContent,
-      description: this._description.textContent,
+      name: this._profileName.innerText,
+      description: this._description.innerText,
     };
   }
 
@@ -16,6 +16,3 @@ export default class UserInfo {
     this._description.textContent = data.description;
   }
 }
-
-//create and instance of the UserInfo class in index.js and use
-//its methods as described

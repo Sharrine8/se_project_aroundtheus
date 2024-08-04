@@ -6,7 +6,6 @@ export default class Section {
   }
 
   renderItems() {
-    //this method should be called once on page load
     this._items.forEach((item) => this._renderer(item));
   }
 

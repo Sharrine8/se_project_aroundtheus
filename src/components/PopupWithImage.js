@@ -8,7 +8,6 @@ export default class PopupWithImage extends Popup {
   }
 
   open({ name, link }) {
-    console.log("open image modal");
     this._imagePreview.src = link;
     this._imagePreview.alt = `Picture of ${name}`;
     this._imageCaption.textContent = name;
