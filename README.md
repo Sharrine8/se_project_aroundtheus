@@ -16,8 +16,9 @@ Description Video: https://drive.google.com/file/d/1D3jupCZFtGxE3EozhQ2xrmw-OE2J
 
 - HTML
 - CSS (Flexbox, Grid, Media Queries, Fonts, BEM, etc.)
+- JavaScript (Webpack, Node.js, Babel, JSON)
 
 **Plans for Improving**
 
-- Adding JavaScript for more functionality
-- Possibly padding or further positioning for 800+px viewport
+- Setting up API
+- Uploading to web server
