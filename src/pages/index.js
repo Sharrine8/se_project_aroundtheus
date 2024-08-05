@@ -11,8 +11,6 @@ import {
   settings,
   initialCards,
   profileEditButton,
-  profileTitleInput,
-  profileDescInput,
   cardAddButton,
 } from "../utils/constants.js";
 
@@ -68,8 +66,7 @@ const userInfo = new UserInfo("#profile-title", "#profile-description");
 
 profileEditButton.addEventListener("click", () => {
   const { name, description } = userInfo.getUserInfo();
-  profileTitleInput.value = name;
-  profileDescInput.value = description;
+  profilePopupForm.setInputValues({ title: name, description });
   editFormValidator.resetValidation();
   profilePopupForm.open();
 });

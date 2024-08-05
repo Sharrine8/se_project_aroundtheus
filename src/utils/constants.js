@@ -38,10 +38,5 @@ export const initialCards = [
 
 //Profile Edit Modal
 export const profileEditButton = document.querySelector("#profile-edit-button");
-//Profile
-export const profileTitleInput = document.querySelector("#modal-title-input");
-export const profileDescInput = document.querySelector(
-  "#modal-description-input"
-);
 //Add Modal
 export const cardAddButton = document.querySelector("#profile-add-button");
