@@ -43,15 +43,5 @@ export const profileTitleInput = document.querySelector("#modal-title-input");
 export const profileDescInput = document.querySelector(
   "#modal-description-input"
 );
-//Cards
-export const cardListEl = document.querySelector(".cards__list");
 //Add Modal
 export const cardAddButton = document.querySelector("#profile-add-button");
-export const cardAddModal = document.querySelector("#profile-add-modal");
-export const cardAddTitleInput = document.querySelector(
-  "#modal-add-title-input"
-);
-export const cardImageInput = document.querySelector("#modal-image-input");
-//Image Modal
-export const cardImageModalCaption = document.querySelector(".modal__caption");
-export const cardImageModalLink = document.querySelector(".modal__image");

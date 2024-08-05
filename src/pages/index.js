@@ -3,6 +3,7 @@ import FormValidator from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
+import Section from "../components/Section.js";
 import "./index.css";
 import jacquesCousteau from "../images/jacques-cousteau.jpg";
 import logoImage from "../images/logo.svg";
@@ -12,13 +13,7 @@ import {
   profileEditButton,
   profileTitleInput,
   profileDescInput,
-  cardListEl,
   cardAddButton,
-  cardAddModal,
-  cardAddTitleInput,
-  cardImageInput,
-  cardImageModalCaption,
-  cardImageModalLink,
 } from "../utils/constants.js";
 
 //Functions
@@ -29,10 +24,11 @@ function handleEditProfileFormSubmit(data) {
 }
 
 function handleAddProfileFormSubmit() {
-  const name = cardAddTitleInput.value;
-  const link = cardImageInput.value;
+  const data = addCardPopupForm.getInputValue();
+  const name = data.name;
+  const link = data.image;
   const cardElement = createCard({ name, link });
-  cardListEl.prepend(cardElement);
+  layerSection.addItem(cardElement);
   addCardPopupForm.close();
   addFormValidator.toggleButtonState();
   return;
@@ -44,9 +40,6 @@ function createCard(data) {
 }
 
 function handleCardImageClick(name, link) {
-  cardImageModalCaption.textContent = name;
-  cardImageModalLink.setAttribute("src", link);
-  cardImageModalLink.setAttribute("alt", "Picture of " + name);
   cardImagePopup.open({ name, link });
 }
 
@@ -58,6 +51,10 @@ logo.src = logoImage;
 //Class Instances
 const addFormValidator = new FormValidator(settings, "#modal-add-form");
 const editFormValidator = new FormValidator(settings, "#modal-edit-form");
+const layerSection = new Section(
+  { items: initialCards, renderer: createCard },
+  ".cards__list"
+);
 const profilePopupForm = new PopupWithForm(
   "#profile-edit-modal",
   handleEditProfileFormSubmit
@@ -77,11 +74,6 @@ profileEditButton.addEventListener("click", () => {
   profilePopupForm.open();
 });
 
-initialCards.forEach((data) => {
-  const cardElement = createCard(data);
-  cardListEl.append(cardElement);
-});
-
 cardAddButton.addEventListener("click", () => {
   addCardPopupForm.open();
 });
@@ -91,3 +83,4 @@ editFormValidator.enableValidation();
 addCardPopupForm.setEventListeners();
 profilePopupForm.setEventListeners();
 cardImagePopup.setEventListeners();
+layerSection.renderItems();
