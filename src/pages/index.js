@@ -23,8 +23,7 @@ function handleEditProfileFormSubmit(data) {
   return;
 }
 
-function handleAddProfileFormSubmit() {
-  const data = addCardPopupForm.getInputValue();
+function handleAddProfileFormSubmit(data) {
   const name = data.name;
   const link = data.image;
   const cardElement = createCard({ name, link });
