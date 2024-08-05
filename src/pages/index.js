@@ -29,6 +29,7 @@ function handleAddProfileFormSubmit(data) {
   const cardElement = createCard({ name, link });
   layerSection.addItem(cardElement);
   addCardPopupForm.close();
+  addCardPopupForm.reset();
   addFormValidator.toggleButtonState();
   return;
 }
