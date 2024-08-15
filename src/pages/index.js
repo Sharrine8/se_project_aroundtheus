@@ -4,6 +4,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
 import Section from "../components/Section.js";
+import Api from "../components/Api.js";
 import "./index.css";
 import jacquesCousteau from "../images/jacques-cousteau.jpg";
 import logoImage from "../images/logo.svg";
@@ -63,6 +64,13 @@ const addCardPopupForm = new PopupWithForm(
 );
 const cardImagePopup = new PopupWithImage("#modal-image-popup");
 const userInfo = new UserInfo("#profile-title", "#profile-description");
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "7c40b814-e707-41cf-959d-91dbc11467c7",
+    "Content-Type": "application/json",
+  },
+});
 
 profileEditButton.addEventListener("click", () => {
   const { name, description } = userInfo.getUserInfo();
