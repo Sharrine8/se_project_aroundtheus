@@ -51,7 +51,7 @@ logo.src = logoImage;
 const addFormValidator = new FormValidator(settings, "#modal-add-form");
 const editFormValidator = new FormValidator(settings, "#modal-edit-form");
 const layerSection = new Section(
-  { items: initialCards, renderer: createCard },
+  { items: [], renderer: createCard },
   ".cards__list"
 );
 const profilePopupForm = new PopupWithForm(
@@ -88,4 +88,32 @@ editFormValidator.enableValidation();
 addCardPopupForm.setEventListeners();
 profilePopupForm.setEventListeners();
 cardImagePopup.setEventListeners();
-layerSection.renderItems();
+
+api
+  .getUser()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+api
+  .getInitialCards()
+  .then((result) => {
+    layerSection.setItems(result);
+    layerSection.renderItems();
+    console.log(layerSection); //need to process the result
+  })
+  .catch((err) => {
+    console.error(err); // log the error to the console
+  });
+
+api
+  .editProfile()
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
