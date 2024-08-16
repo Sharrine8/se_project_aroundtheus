@@ -1,15 +1,27 @@
 export default class Card {
-  constructor(data, cardSelector, handleImageClick) {
+  constructor(
+    data,
+    cardSelector,
+    handleImageClick,
+    handleCardDelete,
+    handleLikeCard
+  ) {
     this._name = data.name;
     this._link = data.link;
     this._card = cardSelector;
     this._handleImageClick = handleImageClick;
+    this._handleCardDelete = handleCardDelete;
+    this._handleLikeCard = handleLikeCard;
+    this._data = data;
     this._id = data._id;
+    this._isLiked = data.isLiked;
   }
 
   _setEventListeners() {
     this._likeButton = this._cardElement.querySelector(".card__like-button");
-    this._likeButton.addEventListener("click", this._handleLikeIcon);
+    this._likeButton.addEventListener("click", () => {
+      this._handleLikeCard(this);
+    });
     this._cardElement
       .querySelector(".card__delete-button")
       .addEventListener("click", this.handleDeleteCard);
@@ -19,18 +31,22 @@ export default class Card {
   }
 
   handleDeleteCard = () => {
-    // this._deleteButton = this._cardElement.querySelector(
-    //   ".card__delete-button"
-    // );
-    // this._popup = document.getElementById("delete-card-modal");
-    // this._popup.classList.add("modal_open");
-    this._cardElement.remove();
-    this._cardElement = null;
+    this._handleCardDelete(this._data._id, this._cardElement);
   };
 
-  _handleLikeIcon = () => {
-    this._likeButton.classList.toggle("card__like-button_active");
-  };
+  addLikeButton() {
+    this._likeButton.classList.add("card__like-button_active");
+  }
+
+  removeLikeButton() {
+    this._likeButton.classList.remove("card__like-button_active");
+  }
+
+  setLikeButtonState() {
+    if (this._isLiked) {
+      this.addLikeButton();
+    }
+  }
 
   renderCard() {
     this._cardElement = document
@@ -42,6 +58,7 @@ export default class Card {
     this._imageElement.setAttribute("src", this._link);
     this._imageElement.setAttribute("alt", "Picture of " + this._name);
     this._setEventListeners();
+    this.setLikeButtonState();
     return this._cardElement;
   }
 }

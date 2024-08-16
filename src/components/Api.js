@@ -10,10 +10,7 @@ export default class Api {
         authorization: this._authorization,
       },
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
+      return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
     });
   }
 
@@ -23,10 +20,7 @@ export default class Api {
         authorization: this._authorization,
       },
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
+      return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
     });
   }
 
@@ -42,10 +36,7 @@ export default class Api {
         about: data.description,
       }),
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
+      return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
     });
   }
 
@@ -61,25 +52,52 @@ export default class Api {
         link: data.link,
       }),
     }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
+      return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
     });
   }
 
   deleteCard(cardId) {
-    fetch(`https://around-api.en.tripleten-services.com/v1/cards/${cardId}`, {
-      method: "DELETE",
-      headers: {
-        authorization: this._authorization,
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
+    return fetch(
+      `https://around-api.en.tripleten-services.com/v1/cards/${cardId}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: this._authorization,
+          "Content-Type": "application/json",
+        },
       }
-      return Promise.reject(`Error: ${res.status}`);
+    ).then((res) => {
+      return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+    });
+  }
+
+  addLike(cardId) {
+    return fetch(
+      `https://around-api.en.tripleten-services.com/v1/cards/${cardId}/likes`,
+      {
+        method: "PUT",
+        headers: {
+          authorization: this._authorization,
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((res) => {
+      return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+    });
+  }
+
+  removeLike(cardId) {
+    return fetch(
+      `https://around-api.en.tripleten-services.com/v1/cards/${cardId}/likes`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: this._authorization,
+          "Content-Type": "application.json",
+        },
+      }
+    ).then((res) => {
+      return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
     });
   }
 }

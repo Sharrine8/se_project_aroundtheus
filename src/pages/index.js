@@ -2,9 +2,9 @@ import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
-import Popup from "../components/Popup.js";
 import UserInfo from "../components/UserInfo.js";
 import Section from "../components/Section.js";
+import Popup from "../components/Popup.js";
 import Api from "../components/Api.js";
 import "./index.css";
 import jacquesCousteau from "../images/jacques-cousteau.jpg";
@@ -49,7 +49,13 @@ function handleAddProfileFormSubmit(data) {
 }
 
 function createCard(data) {
-  const card = new Card(data, "#card-template", handleCardImageClick);
+  const card = new Card(
+    data,
+    "#card-template",
+    handleCardImageClick,
+    handleCardDelete,
+    handleLikeCard
+  );
   return card.renderCard();
 }
 
@@ -123,26 +129,48 @@ api
     console.error(err);
   });
 
-// api
-//   .deleteCard()
-//   .then((res) => {
-//     console.log(res);
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//   });
-
 //delete card modal test
-function handleCardDelete(cardId, container) {
-  if (confirm("Are you sure you want to delete this card?")) {
+
+const deletePopup = new Popup("#delete-card-modal");
+deletePopup.setEventListeners();
+
+function handleCardDelete(cardId, cardElement) {
+  const confirmDeleteBtn = document.getElementById("confirm-del-btn");
+  deletePopup.open();
+  confirmDeleteBtn.addEventListener("click", () => {
     api
       .deleteCard(cardId)
       .then(() => {
-        container.remove();
-        container = null;
+        cardElement.remove();
+        cardElement = null;
+        deletePopup.close();
       })
       .catch((err) => {
         console.error("Failed to delete card:", err);
+      });
+  });
+}
+
+function handleLikeCard(card) {
+  if (card._isLiked === false) {
+    return api
+      .addLike(card._id)
+      .then(() => {
+        card._isLiked = true;
+        card.addLikeButton();
+      })
+      .catch((err) => {
+        console.error("Error on liking card", err);
+      });
+  } else if (card._isLiked === true) {
+    return api
+      .removeLike(card._id)
+      .then(() => {
+        card._isLiked = false;
+        card.removeLikeButton();
+      })
+      .catch((err) => {
+        console.error("Error on unliking", err);
       });
   }
 }
