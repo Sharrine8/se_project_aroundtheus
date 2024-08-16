@@ -2,6 +2,7 @@ import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import Popup from "../components/Popup.js";
 import UserInfo from "../components/UserInfo.js";
 import Section from "../components/Section.js";
 import Api from "../components/Api.js";
@@ -10,18 +11,16 @@ import jacquesCousteau from "../images/jacques-cousteau.jpg";
 import logoImage from "../images/logo.svg";
 import {
   settings,
-  //initialCards,
   profileEditButton,
   cardAddButton,
 } from "../utils/constants.js";
 
 //Functions
 function handleEditProfileFormSubmit(data) {
-  // userInfo.setUserInfo(data);
   api
-    .editProfile({ title: data.name, description: data.description })
+    .editProfile({ name: data.name, description: data.description })
     .then((res) => {
-      userInfo.setUserInfo({ title: res.name, description: res.about });
+      userInfo.setUserInfo({ name: res.name, description: res.about });
     })
     .catch((err) => {
       console.error(err);
@@ -31,10 +30,18 @@ function handleEditProfileFormSubmit(data) {
 }
 
 function handleAddProfileFormSubmit(data) {
-  const name = data.name;
-  const link = data.image;
-  const cardElement = createCard({ name, link });
-  layerSection.addItem(cardElement);
+  api
+    .addCard({
+      name: data.name,
+      link: data.image,
+    })
+    .then((res) => {
+      console.log(res);
+      layerSection.addItem(createCard(res));
+    })
+    .catch((err) => {
+      console.error(err);
+    });
   addCardPopupForm.close();
   addCardPopupForm.reset();
   addFormValidator.toggleButtonState();
@@ -82,7 +89,7 @@ const api = new Api({
 
 profileEditButton.addEventListener("click", () => {
   const { name, description } = userInfo.getUserInfo();
-  profilePopupForm.setInputValues({ title: name, description });
+  profilePopupForm.setInputValues({ name: name, description });
   editFormValidator.resetValidation();
   profilePopupForm.open();
 });
@@ -100,8 +107,7 @@ cardImagePopup.setEventListeners();
 api
   .getUser()
   .then((result) => {
-    console.log(result);
-    userInfo.setUserInfo({ title: result.name, description: result.about });
+    userInfo.setUserInfo({ name: result.name, description: result.about });
   })
   .catch((err) => {
     console.error(err);
@@ -109,20 +115,34 @@ api
 
 api
   .getInitialCards()
-  .then((result) => {
-    layerSection.setItems(result);
+  .then((res) => {
+    layerSection.setItems(res);
     layerSection.renderItems();
-    console.log(layerSection);
   })
   .catch((err) => {
     console.error(err);
   });
 
 // api
-//   .editProfile(userInfo.getUserInfo())
+//   .deleteCard()
 //   .then((res) => {
-//     userInfo.setUserInfo({ title: res.name, description: res.about });
+//     console.log(res);
 //   })
 //   .catch((err) => {
 //     console.error(err);
 //   });
+
+//delete card modal test
+function handleCardDelete(cardId, container) {
+  if (confirm("Are you sure you want to delete this card?")) {
+    api
+      .deleteCard(cardId)
+      .then(() => {
+        container.remove();
+        container = null;
+      })
+      .catch((err) => {
+        console.error("Failed to delete card:", err);
+      });
+  }
+}

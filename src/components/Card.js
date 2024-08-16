@@ -2,8 +2,9 @@ export default class Card {
   constructor(data, cardSelector, handleImageClick) {
     this._name = data.name;
     this._link = data.link;
-    this._cardSelector = cardSelector;
+    this._card = cardSelector;
     this._handleImageClick = handleImageClick;
+    this._id = data._id;
   }
 
   _setEventListeners() {
@@ -11,13 +12,18 @@ export default class Card {
     this._likeButton.addEventListener("click", this._handleLikeIcon);
     this._cardElement
       .querySelector(".card__delete-button")
-      .addEventListener("click", this._handleDeleteCard);
+      .addEventListener("click", this.handleDeleteCard);
     this._imageElement.addEventListener("click", () => {
       this._handleImageClick(this._name, this._link);
     });
   }
 
-  _handleDeleteCard = () => {
+  handleDeleteCard = () => {
+    // this._deleteButton = this._cardElement.querySelector(
+    //   ".card__delete-button"
+    // );
+    // this._popup = document.getElementById("delete-card-modal");
+    // this._popup.classList.add("modal_open");
     this._cardElement.remove();
     this._cardElement = null;
   };
@@ -28,7 +34,7 @@ export default class Card {
 
   renderCard() {
     this._cardElement = document
-      .querySelector(this._cardSelector)
+      .querySelector(this._card)
       .content.querySelector(".card")
       .cloneNode(true);
     this._cardElement.querySelector(".card__title").textContent = this._name;
