@@ -10,14 +10,22 @@ import jacquesCousteau from "../images/jacques-cousteau.jpg";
 import logoImage from "../images/logo.svg";
 import {
   settings,
-  initialCards,
+  //initialCards,
   profileEditButton,
   cardAddButton,
 } from "../utils/constants.js";
 
 //Functions
 function handleEditProfileFormSubmit(data) {
-  userInfo.setUserInfo(data);
+  // userInfo.setUserInfo(data);
+  api
+    .editProfile({ title: data.name, description: data.description })
+    .then((res) => {
+      userInfo.setUserInfo({ title: res.name, description: res.about });
+    })
+    .catch((err) => {
+      console.error(err);
+    });
   profilePopupForm.close();
   return;
 }
@@ -93,6 +101,7 @@ api
   .getUser()
   .then((result) => {
     console.log(result);
+    userInfo.setUserInfo({ title: result.name, description: result.about });
   })
   .catch((err) => {
     console.error(err);
@@ -103,17 +112,17 @@ api
   .then((result) => {
     layerSection.setItems(result);
     layerSection.renderItems();
-    console.log(layerSection); //need to process the result
-  })
-  .catch((err) => {
-    console.error(err); // log the error to the console
-  });
-
-api
-  .editProfile()
-  .then((res) => {
-    console.log(res);
+    console.log(layerSection);
   })
   .catch((err) => {
     console.error(err);
   });
+
+// api
+//   .editProfile(userInfo.getUserInfo())
+//   .then((res) => {
+//     userInfo.setUserInfo({ title: res.name, description: res.about });
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//   });

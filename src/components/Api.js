@@ -29,7 +29,8 @@ export default class Api {
     });
   }
 
-  editProfile(/*take name and about from here*/) {
+  editProfile(data) {
+    console.log(data);
     return fetch("https://around-api.en.tripleten-services.com/v1/users/me", {
       method: "PATCH",
       headers: {
@@ -37,8 +38,8 @@ export default class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: "Marie Skłodowska Curie",
-        about: "Physicist and Chemist",
+        name: "Jacques Cousteau",
+        about: "Explorer",
       }),
     }).then((res) => {
       if (res.ok) {
