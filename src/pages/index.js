@@ -4,7 +4,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
 import Section from "../components/Section.js";
-import Popup from "../components/Popup.js";
+import PopupWithConfirm from "../components/PopupWithConfirm.js";
 import Api from "../components/Api.js";
 import "./index.css";
 import jacquesCousteau from "../images/jacques-cousteau.jpg";
@@ -36,7 +36,6 @@ function handleAddProfileFormSubmit(data) {
       link: data.image,
     })
     .then((res) => {
-      console.log(res);
       layerSection.addItem(createCard(res));
     })
     .catch((err) => {
@@ -54,7 +53,8 @@ function createCard(data) {
     "#card-template",
     handleCardImageClick,
     handleCardDelete,
-    handleLikeCard
+    handleLikeCard,
+    handleDeleteModal
   );
   return card.renderCard();
 }
@@ -63,92 +63,21 @@ function handleCardImageClick(name, link) {
   cardImagePopup.open({ name, link });
 }
 
-//Image srcs
-const avatar = document.getElementById("profile-image");
-avatar.src = jacquesCousteau;
-const logo = document.getElementById("logo");
-logo.src = logoImage;
-//Class Instances
-const addFormValidator = new FormValidator(settings, "#modal-add-form");
-const editFormValidator = new FormValidator(settings, "#modal-edit-form");
-const layerSection = new Section(
-  { items: [], renderer: createCard },
-  ".cards__list"
-);
-const profilePopupForm = new PopupWithForm(
-  "#profile-edit-modal",
-  handleEditProfileFormSubmit
-);
-const addCardPopupForm = new PopupWithForm(
-  "#profile-add-modal",
-  handleAddProfileFormSubmit
-);
-const cardImagePopup = new PopupWithImage("#modal-image-popup");
-const userInfo = new UserInfo("#profile-title", "#profile-description");
-const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: "7c40b814-e707-41cf-959d-91dbc11467c7",
-    "Content-Type": "application/json",
-  },
-});
+function handleCardDelete(card) {
+  api
+    .deleteCard(card._id)
+    .then(() => {
+      card._cardElement.remove();
+      card._cardElement = null;
+      deletePopup.close();
+    })
+    .catch((err) => {
+      console.error("Failed to delete card:", err);
+    });
+}
 
-profileEditButton.addEventListener("click", () => {
-  const { name, description } = userInfo.getUserInfo();
-  profilePopupForm.setInputValues({ name: name, description });
-  editFormValidator.resetValidation();
-  profilePopupForm.open();
-});
-
-cardAddButton.addEventListener("click", () => {
-  addCardPopupForm.open();
-});
-
-addFormValidator.enableValidation();
-editFormValidator.enableValidation();
-addCardPopupForm.setEventListeners();
-profilePopupForm.setEventListeners();
-cardImagePopup.setEventListeners();
-
-api
-  .getUser()
-  .then((result) => {
-    userInfo.setUserInfo({ name: result.name, description: result.about });
-  })
-  .catch((err) => {
-    console.error(err);
-  });
-
-api
-  .getInitialCards()
-  .then((res) => {
-    layerSection.setItems(res);
-    layerSection.renderItems();
-  })
-  .catch((err) => {
-    console.error(err);
-  });
-
-//delete card modal test
-
-const deletePopup = new Popup("#delete-card-modal");
-deletePopup.setEventListeners();
-
-function handleCardDelete(cardId, cardElement) {
-  const confirmDeleteBtn = document.getElementById("confirm-del-btn");
-  deletePopup.open();
-  confirmDeleteBtn.addEventListener("click", () => {
-    api
-      .deleteCard(cardId)
-      .then(() => {
-        cardElement.remove();
-        cardElement = null;
-        deletePopup.close();
-      })
-      .catch((err) => {
-        console.error("Failed to delete card:", err);
-      });
-  });
+function handleDeleteModal(card) {
+  deletePopup.open(card);
 }
 
 function handleLikeCard(card) {
@@ -174,3 +103,78 @@ function handleLikeCard(card) {
       });
   }
 }
+
+//Image srcs
+const avatar = document.getElementById("profile-image");
+avatar.src = jacquesCousteau;
+const logo = document.getElementById("logo");
+logo.src = logoImage;
+
+//Class Instances
+const addFormValidator = new FormValidator(settings, "#modal-add-form");
+const editFormValidator = new FormValidator(settings, "#modal-edit-form");
+const layerSection = new Section(
+  { items: [], renderer: createCard },
+  ".cards__list"
+);
+const profilePopupForm = new PopupWithForm(
+  "#profile-edit-modal",
+  handleEditProfileFormSubmit
+);
+const addCardPopupForm = new PopupWithForm(
+  "#profile-add-modal",
+  handleAddProfileFormSubmit
+);
+const cardImagePopup = new PopupWithImage("#modal-image-popup");
+const userInfo = new UserInfo("#profile-title", "#profile-description");
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "7c40b814-e707-41cf-959d-91dbc11467c7",
+    "Content-Type": "application/json",
+  },
+});
+const deletePopup = new PopupWithConfirm(
+  "#delete-card-modal",
+  handleCardDelete
+);
+
+//Eventlisteners
+profileEditButton.addEventListener("click", () => {
+  const { name, description } = userInfo.getUserInfo();
+  profilePopupForm.setInputValues({ name: name, description });
+  editFormValidator.resetValidation();
+  profilePopupForm.open();
+});
+
+cardAddButton.addEventListener("click", () => {
+  addCardPopupForm.open();
+});
+
+//Class calls
+addFormValidator.enableValidation();
+editFormValidator.enableValidation();
+addCardPopupForm.setEventListeners();
+profilePopupForm.setEventListeners();
+cardImagePopup.setEventListeners();
+deletePopup.setEventListeners();
+
+//API Calls
+api
+  .getUser()
+  .then((result) => {
+    userInfo.setUserInfo({ name: result.name, description: result.about });
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+api
+  .getInitialCards()
+  .then((res) => {
+    layerSection.setItems(res);
+    layerSection.renderItems();
+  })
+  .catch((err) => {
+    console.error(err);
+  });

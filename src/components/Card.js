@@ -4,7 +4,8 @@ export default class Card {
     cardSelector,
     handleImageClick,
     handleCardDelete,
-    handleLikeCard
+    handleLikeCard,
+    handleDeleteModal
   ) {
     this._name = data.name;
     this._link = data.link;
@@ -15,6 +16,7 @@ export default class Card {
     this._data = data;
     this._id = data._id;
     this._isLiked = data.isLiked;
+    this._handleDeleteModal = handleDeleteModal;
   }
 
   _setEventListeners() {
@@ -24,14 +26,16 @@ export default class Card {
     });
     this._cardElement
       .querySelector(".card__delete-button")
-      .addEventListener("click", this.handleDeleteCard);
+      .addEventListener("click", () => {
+        this._handleDeleteModal(this);
+      });
     this._imageElement.addEventListener("click", () => {
       this._handleImageClick(this._name, this._link);
     });
   }
 
   handleDeleteCard = () => {
-    this._handleCardDelete(this._data._id, this._cardElement);
+    this._handleCardDelete(this, this._cardElement);
   };
 
   addLikeButton() {

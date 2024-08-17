@@ -93,8 +93,26 @@ export default class Api {
         method: "DELETE",
         headers: {
           authorization: this._authorization,
-          "Content-Type": "application.json",
+          "Content-Type": "application/json",
         },
+      }
+    ).then((res) => {
+      return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+    });
+  }
+
+  updateAvatar(avatarLink) {
+    return fetch(
+      `https://around-api.en.tripleten-services.com/v1/users/me/avatar`,
+      {
+        method: "PATCH",
+        headers: {
+          authorization: this._authorization,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          avatar: avatarLink,
+        }),
       }
     ).then((res) => {
       return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
