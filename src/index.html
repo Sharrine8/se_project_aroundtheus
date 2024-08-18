@@ -19,7 +19,10 @@
         <section class="profile page__section">
           <div class="profile__image-container">
             <img id="profile-image" alt="Avatar" class="profile__image" />
-            <button class="profile__image-button"></button>
+            <button
+              class="profile__image-button"
+              id="avatar-edit-button"
+            ></button>
           </div>
           <div class="profile__info">
             <h1 class="profile__title" id="profile-title"></h1>
@@ -116,13 +119,37 @@
     </div>
 
     <div class="modal" id="delete-card-modal">
-      <div class="modal__container">
+      <div class="modal__container modal__delete-container">
         <button
           class="modal__close-button"
           id="delete-card-modal-close"
         ></button>
         <h3 class="modal__heading">Are you sure?</h3>
         <button class="modal__button" id="confirm-del-btn">Yes</button>
+      </div>
+    </div>
+
+    <div class="modal" id="avatar-edit-modal">
+      <div class="modal__container">
+        <button
+          class="modal__close-button"
+          id="profile-avatar-modal-close"
+        ></button>
+        <h3 class="modal__heading">Change profile picture</h3>
+        <form class="modal__form" id="modal-avatar-form">
+          <input
+            type="url"
+            class="modal__input"
+            id="modal-avatar-input"
+            name="image"
+            placeholder="Image URL"
+            required
+          />
+          <span class="modal__error modal-avatar-input-error"></span>
+          <button class="modal__button modal__button_disabled" disabled>
+            Save
+          </button>
+        </form>
       </div>
     </div>
 

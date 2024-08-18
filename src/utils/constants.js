@@ -12,3 +12,5 @@ export const settings = {
 export const profileEditButton = document.querySelector("#profile-edit-button");
 //Add Modal
 export const cardAddButton = document.querySelector("#profile-add-button");
+//Avatar Modal
+export const avatarEditButton = document.querySelector("#avatar-edit-button");

@@ -13,10 +13,12 @@ import {
   settings,
   profileEditButton,
   cardAddButton,
+  avatarEditButton,
 } from "../utils/constants.js";
 
 //Functions
 function handleEditProfileFormSubmit(data) {
+  profilePopupForm.setLoading(true);
   api
     .editProfile({ name: data.name, description: data.description })
     .then((res) => {
@@ -26,10 +28,29 @@ function handleEditProfileFormSubmit(data) {
       console.error(err);
     });
   profilePopupForm.close();
+  profilePopupForm.setLoading(false);
   return;
 }
 
+function handleAvatarFormSubmit(data) {
+  console.log(data);
+  avatarPopupForm.setLoading(true);
+  api
+    .updateAvatar(data)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.error("Error saving avatar:", err);
+    })
+    .finally(avatarPopupForm.setLoading(false));
+  avatarPopupForm.close();
+  userInfo.setAvatar(data);
+  avatarPopupForm.reset();
+}
+
 function handleAddProfileFormSubmit(data) {
+  addCardPopupForm.setLoading(true);
   api
     .addCard({
       name: data.name,
@@ -44,6 +65,7 @@ function handleAddProfileFormSubmit(data) {
   addCardPopupForm.close();
   addCardPopupForm.reset();
   addFormValidator.toggleButtonState();
+  addCardPopupForm.setLoading(false);
   return;
 }
 
@@ -113,6 +135,7 @@ logo.src = logoImage;
 //Class Instances
 const addFormValidator = new FormValidator(settings, "#modal-add-form");
 const editFormValidator = new FormValidator(settings, "#modal-edit-form");
+const avatarFormValidator = new FormValidator(settings, "#modal-avatar-form");
 const layerSection = new Section(
   { items: [], renderer: createCard },
   ".cards__list"
@@ -126,7 +149,11 @@ const addCardPopupForm = new PopupWithForm(
   handleAddProfileFormSubmit
 );
 const cardImagePopup = new PopupWithImage("#modal-image-popup");
-const userInfo = new UserInfo("#profile-title", "#profile-description");
+const userInfo = new UserInfo(
+  "#profile-title",
+  "#profile-description",
+  "#profile-image"
+);
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
@@ -137,6 +164,11 @@ const api = new Api({
 const deletePopup = new PopupWithConfirm(
   "#delete-card-modal",
   handleCardDelete
+);
+
+const avatarPopupForm = new PopupWithForm(
+  "#avatar-edit-modal",
+  handleAvatarFormSubmit
 );
 
 //Eventlisteners
@@ -151,6 +183,10 @@ cardAddButton.addEventListener("click", () => {
   addCardPopupForm.open();
 });
 
+avatarEditButton.addEventListener("click", () => {
+  avatarPopupForm.open();
+});
+
 //Class calls
 addFormValidator.enableValidation();
 editFormValidator.enableValidation();
@@ -158,6 +194,8 @@ addCardPopupForm.setEventListeners();
 profilePopupForm.setEventListeners();
 cardImagePopup.setEventListeners();
 deletePopup.setEventListeners();
+avatarPopupForm.setEventListeners();
+avatarFormValidator.enableValidation();
 
 //API Calls
 api
