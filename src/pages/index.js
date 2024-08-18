@@ -23,30 +23,28 @@ function handleEditProfileFormSubmit(data) {
     .editProfile({ name: data.name, description: data.description })
     .then((res) => {
       userInfo.setUserInfo({ name: res.name, description: res.about });
+      profilePopupForm.close();
     })
     .catch((err) => {
       console.error(err);
     });
-  profilePopupForm.close();
   profilePopupForm.setLoading(false);
   return;
 }
 
 function handleAvatarFormSubmit(data) {
-  console.log(data);
   avatarPopupForm.setLoading(true);
   api
-    .updateAvatar(data)
+    .updateAvatar(data.image)
     .then((res) => {
-      console.log(res);
+      avatarPopupForm.close();
+      avatarPopupForm.reset();
+      userInfo.setAvatar(data.image);
     })
     .catch((err) => {
       console.error("Error saving avatar:", err);
     })
     .finally(avatarPopupForm.setLoading(false));
-  avatarPopupForm.close();
-  userInfo.setAvatar(data);
-  avatarPopupForm.reset();
 }
 
 function handleAddProfileFormSubmit(data) {
@@ -58,13 +56,13 @@ function handleAddProfileFormSubmit(data) {
     })
     .then((res) => {
       layerSection.addItem(createCard(res));
+      addCardPopupForm.close();
+      addCardPopupForm.reset();
+      addFormValidator.toggleButtonState();
     })
     .catch((err) => {
       console.error(err);
     });
-  addCardPopupForm.close();
-  addCardPopupForm.reset();
-  addFormValidator.toggleButtonState();
   addCardPopupForm.setLoading(false);
   return;
 }
@@ -127,8 +125,6 @@ function handleLikeCard(card) {
 }
 
 //Image srcs
-const avatar = document.getElementById("profile-image");
-avatar.src = jacquesCousteau;
 const logo = document.getElementById("logo");
 logo.src = logoImage;
 
@@ -201,7 +197,11 @@ avatarFormValidator.enableValidation();
 api
   .getUser()
   .then((result) => {
-    userInfo.setUserInfo({ name: result.name, description: result.about });
+    userInfo.setUserInfo({
+      name: result.name,
+      description: result.about,
+      avatar: result.avatar,
+    });
   })
   .catch((err) => {
     console.error(err);
