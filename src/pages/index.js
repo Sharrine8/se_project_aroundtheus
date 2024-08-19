@@ -7,7 +7,6 @@ import Section from "../components/Section.js";
 import PopupWithConfirm from "../components/PopupWithConfirm.js";
 import Api from "../components/Api.js";
 import "./index.css";
-import jacquesCousteau from "../images/jacques-cousteau.jpg";
 import logoImage from "../images/logo.svg";
 import {
   settings,
@@ -18,37 +17,36 @@ import {
 
 //Functions
 function handleEditProfileFormSubmit(data) {
-  profilePopupForm.setLoading(true);
+  profilePopupForm.renderLoading(true, loadingText);
   api
     .editProfile({ name: data.name, description: data.description })
     .then((res) => {
-      userInfo.setUserInfo({ name: res.name, description: res.about });
+      userInfo.setUserInfo({
+        name: res.name,
+        description: res.about,
+        avatar: res.avatar,
+      });
       profilePopupForm.close();
     })
-    .catch((err) => {
-      console.error(err);
-    });
-  profilePopupForm.setLoading(false);
-  return;
+    .catch(console.error)
+    .finally(() => profilePopupForm.renderLoading(false, loadingText));
 }
 
 function handleAvatarFormSubmit(data) {
-  avatarPopupForm.setLoading(true);
+  avatarPopupForm.renderLoading(true, loadingText);
   api
     .updateAvatar(data.image)
-    .then((res) => {
+    .then(() => {
       avatarPopupForm.close();
       avatarPopupForm.reset();
       userInfo.setAvatar(data.image);
     })
-    .catch((err) => {
-      console.error("Error saving avatar:", err);
-    })
-    .finally(avatarPopupForm.setLoading(false));
+    .catch(console.error)
+    .finally(() => avatarPopupForm.renderLoading(false, loadingText));
 }
 
 function handleAddProfileFormSubmit(data) {
-  addCardPopupForm.setLoading(true);
+  addCardPopupForm.renderLoading(true, loadingText);
   api
     .addCard({
       name: data.name,
@@ -60,11 +58,8 @@ function handleAddProfileFormSubmit(data) {
       addCardPopupForm.reset();
       addFormValidator.toggleButtonState();
     })
-    .catch((err) => {
-      console.error(err);
-    });
-  addCardPopupForm.setLoading(false);
-  return;
+    .catch(console.error)
+    .finally(() => addCardPopupForm.renderLoading(false, loadingText));
 }
 
 function createCard(data) {
@@ -91,9 +86,7 @@ function handleCardDelete(card) {
       card._cardElement = null;
       deletePopup.close();
     })
-    .catch((err) => {
-      console.error("Failed to delete card:", err);
-    });
+    .catch(console.error);
 }
 
 function handleDeleteModal(card) {
@@ -108,9 +101,7 @@ function handleLikeCard(card) {
         card._isLiked = true;
         card.addLikeButton();
       })
-      .catch((err) => {
-        console.error("Error on liking card", err);
-      });
+      .catch(console.error);
   } else if (card._isLiked === true) {
     return api
       .removeLike(card._id)
@@ -118,9 +109,7 @@ function handleLikeCard(card) {
         card._isLiked = false;
         card.removeLikeButton();
       })
-      .catch((err) => {
-        console.error("Error on unliking", err);
-      });
+      .catch(console.error);
   }
 }
 
@@ -196,16 +185,14 @@ avatarFormValidator.enableValidation();
 //API Calls
 api
   .getUser()
-  .then((result) => {
+  .then((res) => {
     userInfo.setUserInfo({
-      name: result.name,
-      description: result.about,
-      avatar: result.avatar,
+      name: res.name,
+      description: res.about,
+      avatar: res.avatar,
     });
   })
-  .catch((err) => {
-    console.error(err);
-  });
+  .catch(console.error);
 
 api
   .getInitialCards()
@@ -213,6 +200,4 @@ api
     layerSection.setItems(res);
     layerSection.renderItems();
   })
-  .catch((err) => {
-    console.error(err);
-  });
+  .catch(console.error);
