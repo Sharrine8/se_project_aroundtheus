@@ -16,50 +16,53 @@ import {
 } from "../utils/constants.js";
 
 //Functions
-function handleEditProfileFormSubmit(data) {
-  profilePopupForm.renderLoading(true, loadingText);
-  api
-    .editProfile({ name: data.name, description: data.description })
-    .then((res) => {
-      userInfo.setUserInfo({
-        name: res.name,
-        description: res.about,
-        avatar: res.avatar,
-      });
-      profilePopupForm.close();
+function handleSubmit(request, popupInstance, loadingText = "Saving...") {
+  popupInstance.renderLoading(true, loadingText);
+  request()
+    .then(() => {
+      popupInstance.close();
     })
     .catch(console.error)
-    .finally(() => profilePopupForm.renderLoading(false, loadingText));
+    .finally(() => {
+      popupInstance.renderLoading(false, loadingText);
+    });
+}
+
+function handleEditProfileFormSubmit(data) {
+  function makeRequest() {
+    return api
+      .editProfile({ name: data.name, description: data.description })
+      .then((res) => {
+        userInfo.setUserInfo({
+          name: res.name,
+          description: res.about,
+          avatar: res.avatar,
+        });
+      });
+  }
+  handleSubmit(makeRequest, profilePopupForm);
 }
 
 function handleAvatarFormSubmit(data) {
-  avatarPopupForm.renderLoading(true, loadingText);
-  api
-    .updateAvatar(data.image)
-    .then(() => {
-      avatarPopupForm.close();
-      avatarPopupForm.reset();
+  function makeRequest() {
+    return api.updateAvatar(data.image).then(() => {
       userInfo.setAvatar(data.image);
-    })
-    .catch(console.error)
-    .finally(() => avatarPopupForm.renderLoading(false, loadingText));
+      avatarPopupForm.reset();
+      avatarFormValidator.toggleButtonState();
+    });
+  }
+  handleSubmit(makeRequest, avatarPopupForm);
 }
 
 function handleAddProfileFormSubmit(data) {
-  addCardPopupForm.renderLoading(true, loadingText);
-  api
-    .addCard({
-      name: data.name,
-      link: data.image,
-    })
-    .then((res) => {
+  function makeRequest() {
+    return api.addCard({ name: data.name, link: data.image }).then((res) => {
       layerSection.addItem(createCard(res));
-      addCardPopupForm.close();
       addCardPopupForm.reset();
       addFormValidator.toggleButtonState();
-    })
-    .catch(console.error)
-    .finally(() => addCardPopupForm.renderLoading(false, loadingText));
+    });
+  }
+  handleSubmit(makeRequest, addCardPopupForm);
 }
 
 function createCard(data) {
@@ -80,10 +83,10 @@ function handleCardImageClick(name, link) {
 
 function handleCardDelete(card) {
   api
-    .deleteCard(card._id)
+    .deleteCard(card.id)
     .then(() => {
-      card._cardElement.remove();
-      card._cardElement = null;
+      card.cardElement.remove();
+      card.cardElement = null;
       deletePopup.close();
     })
     .catch(console.error);
@@ -94,19 +97,19 @@ function handleDeleteModal(card) {
 }
 
 function handleLikeCard(card) {
-  if (card._isLiked === false) {
+  if (card.isLiked === false) {
     return api
-      .addLike(card._id)
+      .addLike(card.id)
       .then(() => {
-        card._isLiked = true;
+        card.isLiked = true;
         card.addLikeButton();
       })
       .catch(console.error);
-  } else if (card._isLiked === true) {
+  } else if (card.isLiked === true) {
     return api
-      .removeLike(card._id)
+      .removeLike(card.id)
       .then(() => {
-        card._isLiked = false;
+        card.isLiked = false;
         card.removeLikeButton();
       })
       .catch(console.error);

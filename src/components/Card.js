@@ -14,17 +14,17 @@ export default class Card {
     this._handleCardDelete = handleCardDelete;
     this._handleLikeCard = handleLikeCard;
     this._data = data;
-    this._id = data._id;
-    this._isLiked = data.isLiked;
+    this.id = data._id;
+    this.isLiked = data.isLiked;
     this._handleDeleteModal = handleDeleteModal;
   }
 
   _setEventListeners() {
-    this._likeButton = this._cardElement.querySelector(".card__like-button");
+    this._likeButton = this.cardElement.querySelector(".card__like-button");
     this._likeButton.addEventListener("click", () => {
       this._handleLikeCard(this);
     });
-    this._cardElement
+    this.cardElement
       .querySelector(".card__delete-button")
       .addEventListener("click", () => {
         this._handleDeleteModal(this);
@@ -35,7 +35,7 @@ export default class Card {
   }
 
   handleDeleteCard = () => {
-    this._handleCardDelete(this, this._cardElement);
+    this._handleCardDelete(this, this.cardElement);
   };
 
   addLikeButton() {
@@ -47,22 +47,22 @@ export default class Card {
   }
 
   setLikeButtonState() {
-    if (this._isLiked) {
+    if (this.isLiked) {
       this.addLikeButton();
     }
   }
 
   renderCard() {
-    this._cardElement = document
+    this.cardElement = document
       .querySelector(this._card)
       .content.querySelector(".card")
       .cloneNode(true);
-    this._cardElement.querySelector(".card__title").textContent = this._name;
-    this._imageElement = this._cardElement.querySelector(".card__image");
+    this.cardElement.querySelector(".card__title").textContent = this._name;
+    this._imageElement = this.cardElement.querySelector(".card__image");
     this._imageElement.setAttribute("src", this._link);
     this._imageElement.setAttribute("alt", "Picture of " + this._name);
     this._setEventListeners();
     this.setLikeButtonState();
-    return this._cardElement;
+    return this.cardElement;
   }
 }
