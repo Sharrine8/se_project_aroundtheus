@@ -13,7 +13,21 @@ import {
   profileEditButton,
   cardAddButton,
   avatarEditButton,
+  formValidators,
 } from "../utils/constants.js";
+
+//Validation
+const enableValidation = (config) => {
+  const formList = [...document.querySelectorAll(config.formSelector)];
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, `#${formElement.id}`);
+    const formName = formElement.getAttribute("name");
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(settings);
 
 //Functions
 function handleSubmit(request, popupInstance, loadingText = "Saving...") {
@@ -48,7 +62,7 @@ function handleAvatarFormSubmit(data) {
     return api.updateAvatar(data.image).then(() => {
       userInfo.setAvatar(data.image);
       avatarPopupForm.reset();
-      avatarFormValidator.toggleButtonState();
+      formValidators["avatarPopupForm"].toggleButtonState();
     });
   }
   handleSubmit(makeRequest, avatarPopupForm);
@@ -59,7 +73,7 @@ function handleAddProfileFormSubmit(data) {
     return api.addCard({ name: data.name, link: data.image }).then((res) => {
       layerSection.addItem(createCard(res));
       addCardPopupForm.reset();
-      addFormValidator.toggleButtonState();
+      formValidators["addCardPopupForm"].toggleButtonState();
     });
   }
   handleSubmit(makeRequest, addCardPopupForm);
@@ -121,9 +135,6 @@ const logo = document.getElementById("logo");
 logo.src = logoImage;
 
 //Class Instances
-const addFormValidator = new FormValidator(settings, "#modal-add-form");
-const editFormValidator = new FormValidator(settings, "#modal-edit-form");
-const avatarFormValidator = new FormValidator(settings, "#modal-avatar-form");
 const layerSection = new Section(
   { items: [], renderer: createCard },
   ".cards__list"
@@ -163,7 +174,7 @@ const avatarPopupForm = new PopupWithForm(
 profileEditButton.addEventListener("click", () => {
   const { name, description } = userInfo.getUserInfo();
   profilePopupForm.setInputValues({ name: name, description });
-  editFormValidator.resetValidation();
+  formValidators["profilePopupForm"].resetValidation();
   profilePopupForm.open();
 });
 
@@ -176,14 +187,11 @@ avatarEditButton.addEventListener("click", () => {
 });
 
 //Class calls
-addFormValidator.enableValidation();
-editFormValidator.enableValidation();
 addCardPopupForm.setEventListeners();
 profilePopupForm.setEventListeners();
 cardImagePopup.setEventListeners();
 deletePopup.setEventListeners();
 avatarPopupForm.setEventListeners();
-avatarFormValidator.enableValidation();
 
 //API Calls
 api

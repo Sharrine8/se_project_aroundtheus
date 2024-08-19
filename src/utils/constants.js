@@ -14,3 +14,5 @@ export const profileEditButton = document.querySelector("#profile-edit-button");
 export const cardAddButton = document.querySelector("#profile-add-button");
 //Avatar Modal
 export const avatarEditButton = document.querySelector("#avatar-edit-button");
+//Validation
+export const formValidators = {};
