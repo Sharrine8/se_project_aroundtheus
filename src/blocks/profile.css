@@ -10,6 +10,33 @@
   border-radius: 50%;
   margin: 0 24px 0 0;
   object-fit: cover;
+  transition: opacity 0.3s linear;
+}
+
+.profile__image-container {
+  position: relative;
+}
+
+.profile__image-container:hover .profile__image {
+  opacity: 0.4;
+}
+
+.profile__image-button {
+  background: transparent url("../images/avatar-edit-icon.svg") center no-repeat;
+  position: absolute;
+  border: none;
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.3s linear;
+}
+
+.profile__image-button:hover {
+  opacity: 1;
 }
 
 .profile__info {

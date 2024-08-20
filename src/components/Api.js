@@ -1,32 +1,79 @@
 export default class Api {
   constructor(options) {
-    //...
+    this._authorization = options.headers.authorization;
+    this._baseUrl = options.baseUrl;
+    this._headers = options.headers;
+  }
+
+  _request(url, options) {
+    return fetch(url, options).then(this._checkResponse);
+  }
+
+  _checkResponse(res) {
+    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
   }
 
   getInitialCards() {
-    return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
-      headers: {
-        authorization: "7c40b814-e707-41cf-959d-91dbc11467c7",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
+    return this._request(`${this._baseUrl}/cards`, {
+      headers: this._headers,
     });
   }
 
-  //other methods for working with the API
-  //User routes
+  getUser() {
+    return this._request(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+    });
+  }
 
-  // GET /users/me – Get the current user’s info
-  // PATCH /users/me – Update your profile information
-  // PATCH /users/me/avatar – Update avatar
-  // Card routes
+  editProfile(data) {
+    return this._request(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: data.name,
+        about: data.description,
+      }),
+    });
+  }
 
-  // GET /cards – Get all cards
-  // POST /cards – Create a card
-  // DELETE /cards/:cardId – Delete a card
-  // PUT /cards/:cardId/likes – Like a card
-  // DELETE /cards/:cardId/likes – Dislike a card
+  addCard(data) {
+    return this._request(`${this._baseUrl}/cards`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: data.name,
+        link: data.link,
+      }),
+    });
+  }
+  deleteCard(cardId) {
+    return this._request(`${this._baseUrl}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: this._headers,
+    });
+  }
+
+  addLike(cardId) {
+    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    });
+  }
+
+  removeLike(cardId) {
+    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    });
+  }
+
+  async updateAvatar(avatarUrl) {
+    return this._request(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatarUrl,
+      }),
+    });
+  }
 }

@@ -17,17 +17,21 @@
 
       <main class="content">
         <section class="profile page__section">
-          <img id="profile-image" alt="Avatar" class="profile__image" />
+          <div class="profile__image-container">
+            <img id="profile-image" alt="Avatar" class="profile__image" />
+            <button
+              class="profile__image-button"
+              id="avatar-edit-button"
+            ></button>
+          </div>
           <div class="profile__info">
-            <h1 class="profile__title" id="profile-title">Jacques Cousteau</h1>
+            <h1 class="profile__title" id="profile-title"></h1>
             <button
               class="profile__edit-button"
               id="profile-edit-button"
               type="button"
             ></button>
-            <p class="profile__description" id="profile-description">
-              Explorer
-            </p>
+            <p class="profile__description" id="profile-description"></p>
           </div>
           <button
             class="profile__add-button"
@@ -51,12 +55,12 @@
           id="profile-edit-modal-close"
         ></button>
         <h3 class="modal__heading">Edit profile</h3>
-        <form class="modal__form" id="modal-edit-form">
+        <form class="modal__form" id="modal-edit-form" name="profilePopupForm">
           <input
             type="text"
             class="modal__input"
             id="modal-title-input"
-            name="title"
+            name="name"
             placeholder="Name"
             minlength="2"
             maxlength="40"
@@ -86,7 +90,7 @@
           id="profile-add-modal-close"
         ></button>
         <h3 class="modal__heading">New Place</h3>
-        <form class="modal__form" id="modal-add-form">
+        <form class="modal__form" id="modal-add-form" name="addCardPopupForm">
           <input
             type="text"
             class="modal__input"
@@ -107,6 +111,41 @@
             required
           />
           <span class="modal__error modal-image-input-error"></span>
+          <button class="modal__button modal__button_disabled" disabled>
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="delete-card-modal">
+      <div class="modal__container modal__delete-container">
+        <button
+          class="modal__close-button"
+          id="delete-card-modal-close"
+        ></button>
+        <h3 class="modal__heading">Are you sure?</h3>
+        <button class="modal__button" id="confirm-del-btn">Yes</button>
+      </div>
+    </div>
+
+    <div class="modal" id="avatar-edit-modal">
+      <div class="modal__container">
+        <button
+          class="modal__close-button"
+          id="profile-avatar-modal-close"
+        ></button>
+        <h3 class="modal__heading">Change profile picture</h3>
+        <form class="modal__form" id="modal-avatar-form" name="avatarPopupForm">
+          <input
+            type="url"
+            class="modal__input"
+            id="modal-avatar-input"
+            name="image"
+            placeholder="Image URL"
+            required
+          />
+          <span class="modal__error modal-avatar-input-error"></span>
           <button class="modal__button modal__button_disabled" disabled>
             Save
           </button>

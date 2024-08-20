@@ -24,7 +24,6 @@
   border-radius: 10px;
   position: relative;
   margin: auto;
-  min-height: 260px;
   width: 358px;
   color: #000;
   transition: visibility 0.5s, opacity 0.5s linear;
@@ -134,6 +133,10 @@
 .modal__image {
   max-width: 75vw;
   max-height: 75vh;
+}
+
+.modal__delete-container {
+  max-height: 181px;
 }
 
 @media screen and (max-width: 630px) {
