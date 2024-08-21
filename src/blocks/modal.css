@@ -142,7 +142,6 @@
 @media screen and (max-width: 630px) {
   .modal__container {
     width: calc(282px - 44px);
-    min-height: calc(322px - 50px);
     padding: 25px 22px;
   }
   .modal__close-button {
