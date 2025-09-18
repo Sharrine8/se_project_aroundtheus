@@ -17,8 +17,18 @@ Description Video: https://drive.google.com/file/d/1D3jupCZFtGxE3EozhQ2xrmw-OE2J
 - HTML
 - CSS (Flexbox, Grid, Media Queries, Fonts, BEM, etc.)
 - JavaScript (Webpack, Node.js, Babel, JSON)
+- API integration (fetching, posting, deleting, and updating data)
+
+**Completed Features**
+
+- Fully responsive layout for mobile and desktop
+- Editable user profile (name, job title, and avatar)
+- Popup forms for profile edits and adding new posts
+- Like/unlike functionality for posts
+- API setup and integration with backend (profile info and cards are synced with server)
+- Loading states and error handling for API calls
 
 **Plans for Improving**
 
-- Setting up API
-- Uploading to web server
+- Refactor code using React
+- Optimize image handling for performance
